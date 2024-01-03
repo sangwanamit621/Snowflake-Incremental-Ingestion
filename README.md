@@ -20,7 +20,8 @@ The project involves the following components:
 4. **Additional Tables and Tasks:**
     - Another table (`completed_orders_data`) is created to store completed orders.
     - A task (`update_completed_orders_data_table`) is scheduled to run daily, loading completed orders into the new table.
-    - A second task (`truncate_stage_table`) is created and chained to the first task, deleting records older than 7 days from `completed_orders_data`.
+    - Two tasks (`truncate_stage_table` and `delete_old_data`) are created and chained to the first task (`update_completed_orders_data_table`), truncate the stage table (`orders_data`) and deleting records older than 3 years from `completed_orders_data` table.
+
 
 
 ## Prerequisites
@@ -98,7 +99,14 @@ Before getting started, ensure you have the following:
         warehouse = FIRST
         after update_completed_orders_data_table
         as
-        delete from completed_orders_data where order_date - current_date() < 7;
+        truncate table orders_data; 
+
+    
+    create or replace task delete_old_data
+        warehouse = FIRST
+        after update_completed_orders_data_table
+        as
+        delete from completed_orders_data where year(order_date)-year(current_date())>3;
     ```
 
 ## Usage

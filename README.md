@@ -119,6 +119,14 @@ Before getting started, ensure you have the following:
 
 2. **Monitor Execution:**
     - Monitor Snowflake and Google Cloud Console for task executions and file addition notifications.
+    - Execute the following SQL to check the current status of pipe
+        ```sql
+        select system$pipe_status('gcs_snowpipe');
+        ```
+    - Execute the following SQL to check history logs of ingestion
+        ```sql
+        select * from table( information_schema.copy_history( table_name=> 'orders_data', start_time=> dateadd( hours, -1, current_timestamp() ) ) );
+        ```
 
 3. **Customization:**
     - Adjust the task schedules, integration configurations, and other parameters as needed for your specific use case.

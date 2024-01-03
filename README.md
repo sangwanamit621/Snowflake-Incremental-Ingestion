@@ -115,4 +115,5 @@ Before getting started, ensure you have the following:
 3. **Customization:**
     - Adjust the task schedules, integration configurations, and other parameters as needed for your specific use case.
 
-
+## Contributing
+Feel free to contribute to this project. Open an issue or create a pull request with any improvements or suggestions.
